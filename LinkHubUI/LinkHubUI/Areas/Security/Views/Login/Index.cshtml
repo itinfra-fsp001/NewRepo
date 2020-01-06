@@ -1,0 +1,57 @@
+﻿@model BOL.tbl_User
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h2>Login</h2>
+
+@if (TempData["Msg"] != null)
+{
+    <div class="alert alert-dismissible alert-info">
+        <button class="close" type="button" data-dismiss="alert">&times;</button>
+        <h4> @TempData["Msg"].ToString()</h4>
+    </div>
+
+
+}
+@using (Html.BeginForm("SignIn", "Login", FormMethod.Post)) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserEmail, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.UserEmail,     new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.UserEmail, null, new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Password,   new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Password, null,  new { @class = "text-danger" })
+            </div>
+        </div>
+
+       
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="SignIn" class="btn btn-primary" /> (Or) @Html.ActionLink("Login with GMail", "ExternalLogin", "Login", new { provider = "google"} , null)
+            </div>
+        </div>
+    </div>
+}
+
+@*<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>*@
